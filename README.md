@@ -15,3 +15,11 @@ Current local copies are installed at:
 
 - `~/.codex/skills/handoff-auditor`
 - `~/.codex/skills/docs-sync-guardian`
+
+## Validation
+
+Run the fusion A/B regression check before claiming an absorbed skill update is complete:
+
+```bash
+python3 evals/fusion_ab_eval.py --old-ref 1d9949e --new-ref HEAD
+```
