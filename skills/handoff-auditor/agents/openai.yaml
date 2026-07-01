@@ -1,0 +1,4 @@
+interface:
+  display_name: "Handoff Auditor"
+  short_description: "Audit handoffs before accepting them"
+  default_prompt: "Use $handoff-auditor to review this handoff before accepting it."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Docs Sync Guardian"
+  short_description: "Keep repo docs aligned with code changes"
+  default_prompt: "Use $docs-sync-guardian to check which docs need updating after this change."
