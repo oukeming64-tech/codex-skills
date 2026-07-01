@@ -4,8 +4,8 @@ Personal Codex skills distilled from real project work.
 
 ## Skills
 
-- `handoff-auditor`: audit implementation handoffs before accepting, merging, or declaring them complete.
-- `docs-sync-guardian`: keep repository documentation aligned with code, configuration, asset, release, workflow, or product changes.
+- `handoff-auditor`: audit implementation handoffs before accepting, merging, or declaring them complete. It checks claims against current code, verification evidence, docs, release state, and human acceptance requirements.
+- `docs-sync-guardian`: keep repository documentation aligned with code, configuration, asset, release, workflow, or product changes. It treats docs as suspicious after changes, grounds updates in live implementation evidence, and uses a risk gate for human-judgment text.
 
 ## Local Use
 
