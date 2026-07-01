@@ -18,8 +18,16 @@ Current local copies are installed at:
 
 ## Validation
 
-Run the fusion A/B regression check before claiming an absorbed skill update is complete:
+Run the fusion A/B coverage smoke check before claiming an absorbed skill update is complete:
 
 ```bash
 python3 evals/fusion_ab_eval.py --old-ref 1d9949e --new-ref HEAD
 ```
+
+To focus one skill:
+
+```bash
+python3 evals/fusion_ab_eval.py --old-ref 1d9949e --new-ref HEAD --skill docs-sync-guardian
+```
+
+This check catches missing fusion targets and baseline regressions. It does not replace independent review or scenario-based behavior testing.

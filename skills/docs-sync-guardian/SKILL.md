@@ -20,7 +20,7 @@ Use this trust order:
 3. Tests, fixtures, migrations, and release artifacts.
 4. Documentation.
 
-When docs and implementation conflict, update the docs or explicitly report why the apparent conflict is not drift.
+When docs and implementation conflict, update the docs or explicitly report why the apparent conflict is not drift. If the conflicting doc is a normative spec, security policy, product contract, or user-authored requirement, do not silently rewrite it to match implementation; flag the contract/code mismatch and ask which source should change.
 
 ## Sync Workflow
 

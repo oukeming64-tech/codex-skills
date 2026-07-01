@@ -124,7 +124,7 @@ Use this order:
 
 1. Findings, highest severity first, with file and line references when possible.
 2. Open questions or assumptions.
-3. Evidence matrix summary, including unknowns.
+3. Compact evidence matrix summary, including unknowns, when the review is not trivial.
 4. Verification run and gaps.
 5. Acceptance decision.
 

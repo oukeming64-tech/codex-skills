@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Deterministic old-vs-new checks for workflow-skill fusion.
+"""Deterministic old-vs-new smoke checks for workflow-skill fusion.
 
-This is not a model-quality benchmark. It is a regression harness for the
-specific capabilities this repository expects a fusion to preserve or improve.
+This is not a model-quality benchmark and does not prove behavior quality. It is
+a coverage/regression smoke harness for the specific capabilities this
+repository expects a fusion to preserve or improve.
 """
 
 from __future__ import annotations
@@ -27,6 +28,7 @@ class Case:
     category: str
     name: str
     patterns: tuple[str, ...]
+    anti_patterns: tuple[str, ...] = ()
 
 
 CASES: tuple[Case, ...] = (
@@ -35,12 +37,14 @@ CASES: tuple[Case, ...] = (
         "fusion-target",
         "evidence hierarchy rejects unsupported handoff summaries",
         (r"trust order", r"handoff author", r"summary loses"),
+        (r"handoff author(?:'s)? summary wins", r"trust the handoff author over"),
     ),
     Case(
         "handoff-auditor",
         "fusion-target",
         "worktree safety protects user-owned changes",
         (r"Worktree Safety Preflight", r"HEAD", r"reset|discard|stash"),
+        (r"ignore worktree safety", r"stash.*without.*approval", r"reset --hard"),
     ),
     Case(
         "handoff-auditor",
@@ -89,6 +93,7 @@ CASES: tuple[Case, ...] = (
         "fusion-target",
         "implementation, API, and executable examples outrank docs",
         (r"trust order", r"Working implementation", r"Documentation"),
+        (r"documentation always outranks implementation",),
     ),
     Case(
         "docs-sync-guardian",
@@ -113,6 +118,13 @@ CASES: tuple[Case, ...] = (
         "fusion-target",
         "risk gate protects human-judgment text",
         (r"Risk Gate", r"Philosophy|vision|principles", r"Security|threat model"),
+        (r"silently rewrite security policy to match implementation", r"silently rewrite product contracts to match implementation"),
+    ),
+    Case(
+        "docs-sync-guardian",
+        "fusion-target",
+        "normative docs and policies are flagged instead of silently rewritten",
+        (r"normative spec|security policy|product contract", r"do not silently rewrite", r"ask which source should change"),
     ),
     Case(
         "docs-sync-guardian",
@@ -160,7 +172,9 @@ def load_skill(repo: Path, rev: str, skill: str) -> str:
 
 
 def match_case(text: str, case: Case) -> bool:
-    return all(re.search(pattern, text, re.IGNORECASE | re.DOTALL) for pattern in case.patterns)
+    required = all(re.search(pattern, text, re.IGNORECASE | re.DOTALL) for pattern in case.patterns)
+    forbidden = any(re.search(pattern, text, re.IGNORECASE | re.DOTALL) for pattern in case.anti_patterns)
+    return required and not forbidden
 
 
 def score(cases: list[Case], texts: dict[str, str]) -> tuple[int, list[tuple[Case, bool]]]:
@@ -176,13 +190,19 @@ def main() -> int:
     parser.add_argument("--repo", default=".", help="Repository root")
     parser.add_argument("--old-ref", default="1d9949e", help="Old git ref")
     parser.add_argument("--new-ref", default="HEAD", help="New git ref or 'working-tree'")
+    parser.add_argument(
+        "--skill",
+        choices=sorted(SKILL_PATHS),
+        help="Evaluate only one skill instead of the full fusion set",
+    )
     args = parser.parse_args()
 
     repo = Path(args.repo).resolve()
-    old_texts = {skill: load_skill(repo, args.old_ref, skill) for skill in SKILL_PATHS}
-    new_texts = {skill: load_skill(repo, args.new_ref, skill) for skill in SKILL_PATHS}
+    selected_skills = [args.skill] if args.skill else list(SKILL_PATHS)
+    old_texts = {skill: load_skill(repo, args.old_ref, skill) for skill in selected_skills}
+    new_texts = {skill: load_skill(repo, args.new_ref, skill) for skill in selected_skills}
 
-    by_skill = {skill: [case for case in CASES if case.skill == skill] for skill in SKILL_PATHS}
+    by_skill = {skill: [case for case in CASES if case.skill == skill] for skill in selected_skills}
 
     failed = False
     print(f"A/B fusion eval: old={args.old_ref} new={args.new_ref}")
