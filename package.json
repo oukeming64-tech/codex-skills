@@ -1,0 +1,40 @@
+{
+  "name": "@oukeming64-tech/codex-skills",
+  "version": "0.1.0",
+  "description": "Evidence-first handoff auditing and documentation-sync skills for Codex and DeepSeek Harness.",
+  "license": "MIT",
+  "type": "module",
+  "files": [
+    "dsh/cordis.patch.yml",
+    "skills",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "agent-skills",
+    "codex",
+    "deepseek-harness",
+    "dsh-plugin",
+    "documentation",
+    "handoff",
+    "verification"
+  ],
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0"
+  },
+  "author": {
+    "name": "oukeming64-tech",
+    "url": "https://github.com/oukeming64-tech"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oukeming64-tech/codex-skills.git"
+  },
+  "homepage": "https://github.com/oukeming64-tech/codex-skills",
+  "bugs": "https://github.com/oukeming64-tech/codex-skills/issues",
+  "dsh": {
+    "bundle": {
+      "patch": "./dsh/cordis.patch.yml"
+    }
+  }
+}
