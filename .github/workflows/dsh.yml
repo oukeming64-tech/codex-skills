@@ -1,0 +1,39 @@
+name: DeepSeek Harness bundle
+
+on:
+  pull_request:
+    paths:
+      - 'dsh/**'
+      - 'skills/**'
+      - 'package.json'
+      - 'README.md'
+      - 'LICENSE'
+      - '.github/workflows/dsh.yml'
+  push:
+    branches: [main]
+    tags: ['dsh-v*']
+    paths:
+      - 'dsh/**'
+      - 'skills/**'
+      - 'package.json'
+      - 'README.md'
+      - 'LICENSE'
+      - '.github/workflows/dsh.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.19.0
+      - name: Check DSH package contract
+        run: node --test dsh/test/*.test.mjs
+      - name: Check absorbed workflow coverage
+        run: python3 evals/fusion_ab_eval.py --old-ref 1d9949e --new-ref HEAD

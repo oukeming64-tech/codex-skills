@@ -1,0 +1,10 @@
+# Community Skill-only bundle for DeepSeek Harness.
+# It adds one isolated filesystem provider for this package's skills and does
+# not register native tools, hooks, credentials, telemetry, or background work.
+- insert:
+    - id: oukeming64-tech-codex-skills
+      name: '@deepseek-ai/dsh-skill-filesystem'
+      config:
+        providerName: oukeming64-tech-codex-skills
+        includeDefaultRoots: false
+        bundledSkillDir: !!js process.getBuiltinModule('node:path').join(process.getBuiltinModule('node:path').dirname(process.getBuiltinModule('node:module').createRequire(baseUrl).resolve('@oukeming64-tech/codex-skills/package.json')), 'skills')
