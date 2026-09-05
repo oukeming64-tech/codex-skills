@@ -5,6 +5,10 @@ description: Keep repository documentation aligned with code, configuration, ass
 
 # Docs Sync Guardian
 
+## Choose one owner
+
+Use this for ordinary implementation-to-documentation updates. If the project already uses doc-memory and its shard index, let doc-memory own retrieval and sealing; reuse its evidence instead of running both full pipelines. Use handoff-auditor when reviewing another party’s completion claim, not as a mandatory second pass for every small edit.
+
 ## Overview
 
 Treat docs as part of the change, not an afterthought. The goal is to leave future agents and humans with a truthful map of what changed, what did not change, and what remains intentionally out of scope.

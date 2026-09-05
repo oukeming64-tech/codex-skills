@@ -1,9 +1,13 @@
 ---
 name: handoff-auditor
-description: Audit implementation handoffs before accepting, merging, or declaring them complete. Use when Codex reviews another agent's claimed completion, a PR or branch handoff, release readiness, "done" status, or any feature where code, tests, docs, edge cases, and product acceptance must agree. Especially useful for agent-to-agent workflows such as Hermes/Claude handoffs where build success alone is not enough.
+description: Audit implementation handoffs before accepting, merging, or declaring them complete. Use when Codex reviews another agent's claimed completion, a PR or branch handoff, release readiness, "done" status, or a specific completion claim where code, verification, docs and acceptance must agree. Especially useful for agent-to-agent workflows such as Hermes/Claude handoffs where build success alone is not enough.
 ---
 
 # Handoff Auditor
+
+## Choose one owner
+
+Use this for an actual handoff or acceptance claim. Ordinary edits use the relevant targeted verification and docs-sync-guardian; they do not need a separate handoff audit. In a doc-memory project, reuse its current index and evidence for documentation checks instead of repeating its pipeline.
 
 ## Overview
 

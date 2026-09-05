@@ -5,6 +5,16 @@ Portable agent skills distilled from real project work and maintained by
 focuses on one boundary: an agent should not call work complete until its code,
 evidence, documentation, release state, and stated scope agree.
 
+## Start here
+
+| Your task | Use |
+| --- | --- |
+| Update docs after changing implementation | `docs-sync-guardian` |
+| Check another agent's or contributor's claimed completion | `handoff-auditor` |
+| Work in an existing docs-as-memory project | Let its `doc-memory` flow own retrieval and sealing; reuse that evidence |
+
+Choose the owner that fits the task. A small edit does not need three complete pipelines or a new documentation index.
+
 ## Skills
 
 - `handoff-auditor`: audit implementation handoffs before accepting, merging, or declaring them complete. It checks claims against current code, verification evidence, docs, release state, and human acceptance requirements.
